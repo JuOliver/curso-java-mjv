@@ -4,20 +4,33 @@ import model.Conta;
 import repository.ContaRepository;
 import service.ContaService;
 import util.LeitorRemessa;
+import util.LeitorRemessaDelimitado;
 
 import java.util.*;
 
 import model.Transacao;
+import util.LeitorRemessaPosicional;
 import util.TransacaoPrint;
+
+import static util.FormaterUtil.cep;
 
 public class SistemaBancario {
     public static void main(String[] args) {
         cambio();
+
     }
 
     public static void cambio() {
-        LeitorRemessa leitor = new LeitorRemessa();
-        List<Transacao> transacoes = leitor.converter("C:\\Users\\Juliana\\Documents\\DELREMESSA.csv");
+        LeitorRemessa leitor = null;
+        String caminho = "C:\\Users\\Juliana\\Documents\\DELREMESSA.csv";
+        //aplicando polimorfismo para verificar como o arquivo será manipulado
+        if (caminho.contains("DEL")){
+            leitor = new LeitorRemessaDelimitado();
+        } else {
+            leitor = new LeitorRemessaPosicional();
+        }
+
+        List<Transacao> transacoes = leitor.converter(caminho);
 
         TransacaoPrint print = new TransacaoPrint();
         for (Transacao t : transacoes) {
