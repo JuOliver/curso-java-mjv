@@ -3,21 +3,35 @@ package bancodigial;
 import model.Conta;
 import repository.ContaRepository;
 import service.ContaService;
+import util.LeitorRemessa;
 
 import java.util.*;
 
+import model.Transacao;
+import util.TransacaoPrint;
+
 public class SistemaBancario {
     public static void main(String[] args) {
-        OrdenandoArray();
+        cambio();
     }
 
-    public static void OrdenandoArray(){
+    public static void cambio() {
+        LeitorRemessa leitor = new LeitorRemessa();
+        List<Transacao> transacoes = leitor.converter("C:\\Users\\Juliana\\Documents\\DELREMESSA.csv");
+
+        TransacaoPrint print = new TransacaoPrint();
+        for (Transacao t : transacoes) {
+            print.imprimir(t);
+        }
+    }
+
+    public static void OrdenandoArray() {
         List<String> nomes = new ArrayList<>();
         nomes.add("LUNA");
         nomes.add("MARIA");
         nomes.add("FERNANDA");
         Collections.sort(nomes);
-        for (String nome: nomes){
+        for (String nome : nomes) {
             System.out.println(nome);
         }
     }
@@ -39,8 +53,8 @@ public class SistemaBancario {
         contaMaria.setNumero("5574-4");
         repository.adicionarConta(contaMaria);
 
-        Set<Conta>contas = repository.getContas();
-        for (Conta conta : contas){
+        Set<Conta> contas = repository.getContas();
+        for (Conta conta : contas) {
             System.out.println(conta);
         }
     }
@@ -50,5 +64,6 @@ public class SistemaBancario {
         ContaService terminal = new ContaService();
         terminal.depositar(conta, 50.0);
         System.out.println(conta.getSaldo());
+        terminal.exibirExtrato(conta);
     }
 }

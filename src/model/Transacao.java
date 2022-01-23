@@ -1,4 +1,6 @@
-package bancodigial;
+package model;
+
+import bancodigial.Moeda;
 
 import java.time.LocalDate;
 
@@ -74,5 +76,19 @@ public class Transacao {
 
     public void setValorComprado(Double valorComprado) {
         this.valorComprado = valorComprado;
+    }
+
+    @Override
+    public String toString() {
+        return "Transacao{" +
+                "dataTransacao=" + dataTransacao +
+                ", cpf='" + cpf + '\'' +
+                ", nome='" + nome + '\'' +
+                ", moedaVenda=" + moedaVenda +
+                ", valorVendido=" + valorVendido +
+                ", taxaCambio=" + taxaCambio +
+                ", moedaCompra=" + moedaCompra +
+                ", valorComprado=" + valorComprado +
+                '}';
     }
 }
